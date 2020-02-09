@@ -1,5 +1,10 @@
 - hosts: localhost
   gather_facts: false 
-  become: yes 
+  become: yes
+  vars_files:
+    - site-config-tower-vars.yml
+  tasks:
+    - name: Include enviroment vars - Luis Pacheco
+      include_vars: site-config-tower-vars.yml
   roles:
     - config-tower
