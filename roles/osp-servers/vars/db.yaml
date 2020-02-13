@@ -1,0 +1,12 @@
+---
+name: db
+instance_name: db
+group: appsdb
+deployment: QA
+state: present
+image: rhel-guest
+key_name: ansible_ssh
+flavor: m2.small
+security_group_name: db
+meta:
+  - { group: appdbs, deployment_name: QA}

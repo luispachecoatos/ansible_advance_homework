@@ -1,4 +1,31 @@
+---
+#create osp instances, added roles and actual vm createion by Luis Pacheco
 - hosts: workstation
   become: yes
   roles:
-    - osp-servers
+    - osp-setup
+  tasks:
+  #Create frontends vm
+  - name: Create frontend instance
+    include_role:
+       name: osp-servers
+       vars_from: frontend.yaml
+  #Create app1 vm
+  - name: Create app1 instance
+    include_role:
+       name: osp-servers
+       vars_from: app1.yaml
+  #Create app2 vm
+  - name: Create app2 instance
+    include_role:
+       name: osp-servers
+       vars_from: app2.yaml
+  #Create DB vm
+  - name: Create db instance
+    include_role:
+       name: osp-servers
+       vars_from: db.yaml
+  #Get facts
+  - name: Gather facts
+    include_role:
+       name: osp-facts
