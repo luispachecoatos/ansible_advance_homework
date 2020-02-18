@@ -2,6 +2,8 @@
 - hosts: workstation
   become: true
   gather_facts: false
+  vars_files:
+    - site-config-tower-vars.yml
   tasks:
     - name: create bin directory
       file:
@@ -26,8 +28,8 @@
     - name: create credentials
       copy:
         content: |
-          export username={{ param_user }}
-          export password={{ param_password }}
+          export username={{ opentlc_login }}
+          export password={{ opentlc_password }}
           export uri=https://labs.opentlc.com
         dest: /root/credential.rc
         mode: 0755
