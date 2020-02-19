@@ -1,2 +1,4 @@
 [workstation]
 workstation-ec27.rhpds.opentlc.com ansible_connection=ssh ansible_ssh_user=luis.pachecopalencia-atos.net ansible_ssh_private_key_file=/root/.ssh/3bdekey.pem
+[awsbastion]
+bastion.df0f.example.opentlc.com ansible_connection=ssh ansible_ssh_user=luis.pachecopalencia-atos.net ansible_ssh_private_key_file=/root/.ssh/id_rsa

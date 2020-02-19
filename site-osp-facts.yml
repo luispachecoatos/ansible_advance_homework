@@ -1,0 +1,6 @@
+---
+#create osp instances, added roles and actual vm createion by Luis Pacheco
+- hosts: workstation
+  become: yes
+  roles:
+    - osp-facts
