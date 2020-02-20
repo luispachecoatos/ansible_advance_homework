@@ -1,34 +1,24 @@
 ---
-
-- hosts: tag_instance_filter_three_tier_app_psrivast_redhat_com
+- name: configuration 3 tier app in AWS enviroment for homework Luis Pacheco
+  hosts: all
   gather_facts: true
-  roles:
-  - name: osp-facts
-# Setup front-end load balancer tier
+  become: true
+  tasks:
+  - name: Process common configuration
+    include_role:
+      name: three_tier_common
 
+  - name: Configure Frontends
+    include_role:
+      name: three_tier_frontend
+    when: "'frontends' in group_names"
 
-- name: setup load-balancer tier
-  hosts: frontend
-  become: yes
-  roles:
-    - {name: base-config, tags: base-config}
-    - {name: lb-tier, tags: [lbs, haproxy]}
+  - name: Configure App Servers
+    include_role:
+      name: three_tier_app
+    when: "'apps' in group_names"
 
-# Setup application servers tier
-
-- name: setup app tier
-  hosts: apps
-  become: yes
-  gather_facts: false
-  roles:
-    - {name: base-config, tags: base-config}
-    - {name: app-tier, tags: [apps, tomcat]}
-
-# Setup database tier
-
-- name: setup database tier
-  become: yes
-  hosts: appsdb
-  roles:
-    - {name: base-config, tags: base-config}
-    - {name: geerlingguy.postgresql, tags: [dbs, postgres]}
+  - name: Configure AppDB Servers
+    include_role:
+      name: three_tier_appdb
+    when: "'appdbs' in group_names"
