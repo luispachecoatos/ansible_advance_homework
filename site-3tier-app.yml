@@ -11,8 +11,8 @@
   hosts: frontend
   become: yes
   roles:
-    - {name: base-config, tags: base-config}
-    - {name: lb-tier, tags: [lbs, haproxy]}
+    - {name: three_tier_common, tags: base-config}
+    - {name: three_tier_frontend, tags: [lbs, haproxy]}
 
 # Setup application servers tier
 
@@ -21,8 +21,8 @@
   become: yes
   gather_facts: false
   roles:
-    - {name: base-config, tags: base-config}
-    - {name: app-tier, tags: [apps, tomcat]}
+    - {name: three_tier_common, tags: base-config}
+    - {name: three_tier_app, tags: [apps, tomcat]}
 
 # Setup database tier
 
@@ -30,5 +30,5 @@
   become: yes
   hosts: appsdb
   roles:
-    - {name: base-config, tags: base-config}
-    - {name: geerlingguy.postgresql, tags: [dbs, postgres]}
+    - {name: three_tier_common, tags: base-config}
+    - {name: three_tier_appdb, tags: [dbs, postgres]}
